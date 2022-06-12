@@ -12,3 +12,11 @@ last_message=data[len(data)-1]['message']['text']
 
 
 print(datetime.date.today())
+
+#git add . добавление нового файла
+
+#git commit -m "update 1" добавление нового сохранения
+
+#git push имя.сервера(origin) имя.ветки(master) отправление, сохранение на сервер
+
+#git fetch вытащить все изменения1
