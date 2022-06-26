@@ -3,8 +3,8 @@ import json
 
 import requests
 
-def get_weather (city):
-
+def get_weather(city):
+    print(city)
     weather_key = "bfebbff956c2f268f300d3bed559e225"
 
     url = 'https://api.openweathermap.org/data/2.5/forecast'
@@ -17,4 +17,14 @@ def get_weather (city):
     print(data_json["list"][0]["main"]["temp"])
     print(data_json["list"][0]["main"]["temp_max"])
     print(data_json["list"][0]["main"]["feels_like"])
-get_weather('Dnipro')
+
+
+
+    return {
+        "min_temp":data_json["list"][0]["main"]["temp_min"],
+        "max_temp":data_json["list"][0]["main"]["temp_max"],
+        "temp": data_json["list"][0]["main"]["temp"],
+        "feels_like": data_json["list"][0]["main"]["feels_like"]
+    }
+
+

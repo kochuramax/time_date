@@ -5,10 +5,11 @@ import datetime
 from telegram import ReplyKeyboardRemove, ReplyKeyboardMarkup, Update
 from telegram.ext import MessageHandler, Updater, CommandHandler, Filters, CallbackContext
 
+from weather import get_weather
+
 TOKEN= "5512191268:AAEtu0TxbcfJ47faVZFhCAVa6tv0wwY7CVw"
 bot_user_name = "Time_Data_bot"
-x=0
-
+city= ""
 
 
 
@@ -23,35 +24,37 @@ def close_keyboard(update: Update, context: CallbackContext):
 
 
 def echo(update: Update, context: CallbackContext):
-    if update.message.text[-1] == '?':
-        update.message.reply_text('Конечно можно спросить! Только я культурно промолчу...')
-    else:
-        update.message.reply_text('Вполне возможно, кто ж знает?')
+    global city
+    city = update.message.text
 
 
-def address(update: Update, context: CallbackContext):
-    update.message.reply_text('Адрес: Китай, Гималаи, хребет Махалангур-Химал, вершина Эверест, д. 1')
+    update.message.reply_text('Мы запомнили ваш город = '+ city)
 
 
-def phone(update: Update, context: CallbackContext):
+def min_temp(update: Update, context: CallbackContext):
 
-    update.message.reply_text('Телефон: +86 133 2686 8519')
-
-
-def site(update: Update, context: CallbackContext):
-    update.message.reply_text('hello')
+    update.message.reply_text("min temp = "+str(get_weather(city)["min_temp"]))
 
 
-def work_time(update: Update, context: CallbackContext):
-    update.message.reply_text('Время работы: пн-пт, 9-00 - 19-00')
+def max_temp(update: Update, context: CallbackContext):
 
+    update.message.reply_text("max temp = "+str(get_weather(city)["max_temp"]))
+
+
+def temp(update: Update, context: CallbackContext):
+
+    update.message.reply_text("temp = "+ str(get_weather(city)["temp"]))
+
+def feels_like(update: Update, context: CallbackContext):
+    print(city)
+    update.message.reply_text(f"feels like = {get_weather(city)['feels_like']}")
 
 updater = Updater(TOKEN)
 
 dp = updater.dispatcher
 
-reply_keyboard = [['/address', '/phone'],
-                  ['/site', '/work_time']]
+reply_keyboard = [['/min_temp', '/max_temp'],
+                  ['/temp', '/feels_like']]
 
 markup = ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=False)
 
@@ -59,16 +62,15 @@ dp.add_handler(CommandHandler('start', start))
 
 dp.add_handler(CommandHandler('close', close_keyboard))
 
-dp.add_handler(CommandHandler('address', address))
-dp.add_handler(CommandHandler('phone', phone))
-dp.add_handler(CommandHandler('site', site))
-dp.add_handler(CommandHandler('work_time', work_time))
+dp.add_handler(CommandHandler('min_temp', min_temp))
+dp.add_handler(CommandHandler('max_temp', max_temp))
+dp.add_handler(CommandHandler('temp', temp))
+dp.add_handler(CommandHandler('feels_like', feels_like))
 
 text_handler = MessageHandler(Filters.text, echo)
 dp.add_handler(text_handler)
 
 updater.start_polling()
-
 updater.idle()
 
 
