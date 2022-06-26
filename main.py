@@ -7,6 +7,7 @@ from telegram.ext import MessageHandler, Updater, CommandHandler, Filters, Callb
 
 TOKEN= "5512191268:AAEtu0TxbcfJ47faVZFhCAVa6tv0wwY7CVw"
 bot_user_name = "Time_Data_bot"
+x=0
 
 
 
@@ -33,6 +34,7 @@ def address(update: Update, context: CallbackContext):
 
 
 def phone(update: Update, context: CallbackContext):
+
     update.message.reply_text('Телефон: +86 133 2686 8519')
 
 
