@@ -27,27 +27,35 @@ def echo(update: Update, context: CallbackContext):
     global city
     city = update.message.text
 
-
     update.message.reply_text('Мы запомнили ваш город = '+ city)
 
 
 def min_temp(update: Update, context: CallbackContext):
-
-    update.message.reply_text("min temp = "+str(get_weather(city)["min_temp"]))
+    global city
+    if city =="":
+        update.message.reply_text("Напиши вначале свой город")
+    else:
+        update.message.reply_text("min temp = "+str(get_weather(city)["min_temp"]))
 
 
 def max_temp(update: Update, context: CallbackContext):
-
-    update.message.reply_text("max temp = "+str(get_weather(city)["max_temp"]))
+    if city =="":
+        update.message.reply_text("Напиши вначале свой город")
+    else:
+        update.message.reply_text("max temp = "+str(get_weather(city)["max_temp"]))
 
 
 def temp(update: Update, context: CallbackContext):
-
-    update.message.reply_text("temp = "+ str(get_weather(city)["temp"]))
+    if city =="":
+        update.message.reply_text("Напиши вначале свой город")
+    else:
+        update.message.reply_text("temp = "+ str(get_weather(city)["temp"]))
 
 def feels_like(update: Update, context: CallbackContext):
-    print(city)
-    update.message.reply_text(f"feels like = {get_weather(city)['feels_like']}")
+    if city =="":
+        update.message.reply_text("Напиши вначале свой город")
+    else:
+        update.message.reply_text(f"feels like = {get_weather(city)['feels_like']}")
 
 updater = Updater(TOKEN)
 
