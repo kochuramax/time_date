@@ -81,6 +81,8 @@ dp.add_handler(text_handler)
 updater.start_polling()
 updater.idle()
 
+q123
+
 
 
 
